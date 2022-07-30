@@ -22,19 +22,20 @@ class Language(object):
     def make_lexems(self):
         self.lexems = load_lexems(self.language_name)
         self.lexems = normalize_list(self.lexems)
+        self.lexems.sort(reverse=True)
 
 
     def make_synonyms(self): #normaleze pairs q-a
         self.synonyms = load_synonyms(self.language_name)
         # synonym_normalize
-        for pair in self.synonyms:
-            pair = normalize_list(pair)
+        for word in self.synonyms:
+            word = normalize_list(word)
 
     def make_pairs_with_synonyms(self):
         for pair in self.questions_answers:
             q = ' ' + pair[0] + ' '
             a = pair[1]
-            flag = True
+            #flag = True
             for cur_syn_list in self.synonyms:
                 for syn in cur_syn_list:
                     syn_in_q = q.find(syn)
@@ -59,12 +60,20 @@ class Language(object):
 
     def make_dataset(self):
         for q, a in self.questions_answers:
-            words = q.split(' ')
+            #words = q.split(' ')
+            qtmp = ' ' + q + ' '
+            words = []
             for lexem in self.lexems:
-                cur_lexem_list = lexem.split()
-                pos = is_list_in_list(cur_lexem_list, words)
-                if pos != -1:
-                    list_replace(words, pos, cur_lexem_list, [lexem])
+                #cur_lexem_list = lexem.split()
+                #pos = is_list_in_list(cur_lexem_list, words)
+                lex_in_q = qtmp.find(lexem)
+                if lex_in_q != -1 and qtmp[lex_in_q - 1] == ' ' and qtmp[lex_in_q + len(lexem)] == ' ':
+                    #list_replace(words, pos, cur_lexem_list, [lexem])
+                    words.append(lexem)
+                    qtmp = qtmp.replace(lexem,'')
+            wtmp = qtmp.rstrip().lstrip().split()
+            for i in wtmp:
+                words.append(i)
             for word in words:
                 if word not in self.dataset:
                     self.dataset[word] = []

@@ -56,7 +56,7 @@ def text_processing(txt, lang):
         token[i] = morph.normal_forms(token[i])[0]
         token[i] = stemmer.stem(token[i])
     for i in token:
-        if i in lang.stopwords: #and i not in lang.lexems:
+        if i in lang.stopwords and i not in lang.lexems:
             token.remove(i)
     txt = ' '.join(i for i in token)
     return txt

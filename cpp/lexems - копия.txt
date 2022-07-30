@@ -1,12 +1,18 @@
+целое
 имя
 оператор выбора
+int
+signed
+unsigned
 signed int
 unsigned int
+short
 signed short
 unsigned short
 short int
 signed short int
 unsigned short int
+long
 signed long
 unsigned long
 signed long int
@@ -16,11 +22,13 @@ signed long long
 unsigned long long
 signed long long int
 unsigned long long int
+float
+double
 long double
+char
 signed char
 unsigned char
 символьный литерал
 логический литерал
 однострочный комментарий
 многострочный комментарий
-пустой тип
